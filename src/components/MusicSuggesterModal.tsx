@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   X,
   Search,
@@ -396,9 +396,23 @@ export const MusicSuggesterModal: React.FC<MusicSuggesterModalProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Active YouTube video player state
-  const [activeVideoTrack, setActiveVideoTrack] = useState<SongTrack | null>(WEDDING_SONGS_300[0]);
-  const [isVideoOpen, setIsVideoOpen] = useState(true);
+  // Active YouTube video player state (null initially: strictly no auto-playing or overlapping audio)
+  const [activeVideoTrack, setActiveVideoTrack] = useState<SongTrack | null>(null);
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+
+  // Instantly cut off all video and audio playback when modal closes
+  useEffect(() => {
+    if (!isOpen) {
+      setActiveVideoTrack(null);
+      setIsVideoOpen(false);
+    }
+  }, [isOpen]);
+
+  const handleCloseModal = () => {
+    setActiveVideoTrack(null);
+    setIsVideoOpen(false);
+    onClose();
+  };
 
   const categories = [
     'All',
@@ -426,6 +440,7 @@ export const MusicSuggesterModal: React.FC<MusicSuggesterModalProps> = ({
   });
 
   const handleSelectTrackForVideo = (track: SongTrack) => {
+    // If user clicks the currently playing track, keep or refresh single player cleanly
     setActiveVideoTrack(track);
     setIsVideoOpen(true);
   };
@@ -435,6 +450,7 @@ export const MusicSuggesterModal: React.FC<MusicSuggesterModalProps> = ({
     const currentIndex = filteredSongs.findIndex((s) => s.id === activeVideoTrack.id);
     const nextIndex = (currentIndex + 1) % filteredSongs.length;
     setActiveVideoTrack(filteredSongs[nextIndex]);
+    setIsVideoOpen(true);
   };
 
   const handlePrevTrack = () => {
@@ -442,6 +458,7 @@ export const MusicSuggesterModal: React.FC<MusicSuggesterModalProps> = ({
     const currentIndex = filteredSongs.findIndex((s) => s.id === activeVideoTrack.id);
     const prevIndex = (currentIndex - 1 + filteredSongs.length) % filteredSongs.length;
     setActiveVideoTrack(filteredSongs[prevIndex]);
+    setIsVideoOpen(true);
   };
 
   // 100% Guaranteed Error-Free Direct YouTube link
@@ -454,7 +471,12 @@ export const MusicSuggesterModal: React.FC<MusicSuggesterModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/85 backdrop-blur-md">
+    <div
+      onClick={(e) => {
+        if (e.target === e.currentTarget) handleCloseModal();
+      }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/85 backdrop-blur-md"
+    >
       <div className="relative w-full max-w-5xl rounded-3xl border border-stone-800 bg-stone-950 p-5 sm:p-7 text-white shadow-2xl max-h-[94vh] flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-stone-800 pb-4">
@@ -477,8 +499,9 @@ export const MusicSuggesterModal: React.FC<MusicSuggesterModalProps> = ({
             </div>
           </div>
           <button
-            onClick={onClose}
-            className="rounded-lg p-1.5 text-stone-400 hover:text-white hover:bg-stone-900"
+            onClick={handleCloseModal}
+            className="rounded-lg p-1.5 text-stone-400 hover:text-white hover:bg-stone-900 transition-colors"
+            title="Close Melodies"
           >
             <X className="h-5 w-5" />
           </button>
@@ -521,6 +544,17 @@ export const MusicSuggesterModal: React.FC<MusicSuggesterModalProps> = ({
                   <ChevronRight className="h-4 w-4" />
                 </button>
                 <button
+                  onClick={() => {
+                    setActiveVideoTrack(null);
+                    setIsVideoOpen(false);
+                  }}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold rounded-full bg-stone-900 hover:bg-red-950/60 border border-stone-700 hover:border-red-500/50 px-3 py-1.5 text-stone-300 hover:text-red-300 transition-colors"
+                  title="Stop audio and close player"
+                >
+                  <Pause className="h-3.5 w-3.5 text-red-400" />
+                  <span>Stop</span>
+                </button>
+                <button
                   onClick={() => handleOpenDirectYouTube(activeVideoTrack)}
                   className="inline-flex items-center gap-1.5 text-xs font-bold bg-red-600 hover:bg-red-500 text-white px-3.5 py-1.5 rounded-full transition-all shadow-md active:scale-95"
                   title="Watch official high-resolution video directly on YouTube without embed restriction"
@@ -535,6 +569,7 @@ export const MusicSuggesterModal: React.FC<MusicSuggesterModalProps> = ({
             {/* Video Player & Zero-Error Embed with Direct Watch Overlay */}
             <div className="relative w-full aspect-video max-h-[320px] sm:max-h-[360px] rounded-xl overflow-hidden bg-black border border-stone-800 shadow-inner group">
               <iframe
+                key={activeVideoTrack.id}
                 src={`https://www.youtube.com/embed/${activeVideoTrack.youtubeVideoId}?autoplay=1&enablejsapi=1&rel=0`}
                 title={`${activeVideoTrack.title} - ${activeVideoTrack.artist}`}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -570,11 +605,26 @@ export const MusicSuggesterModal: React.FC<MusicSuggesterModalProps> = ({
                 </span>
               </div>
               <button
-                onClick={() => setIsVideoOpen(false)}
-                className="text-stone-400 hover:text-white underline shrink-0 text-right"
+                onClick={() => {
+                  setActiveVideoTrack(null);
+                  setIsVideoOpen(false);
+                }}
+                className="text-stone-400 hover:text-red-400 underline shrink-0 text-right font-medium"
               >
-                Hide Player
+                Stop & Hide Player
               </button>
+            </div>
+          </div>
+        )}
+
+        {/* Informative banner when no video is currently active */}
+        {(!activeVideoTrack || !isVideoOpen) && (
+          <div className="mt-4 flex items-center justify-between rounded-xl border border-stone-800 bg-stone-900/60 px-4 py-2.5 text-xs text-stone-300">
+            <div className="flex items-center gap-2.5">
+              <Volume2 className="h-4 w-4 text-blue-400 shrink-0" />
+              <span>
+                Click any song below to play its YouTube video. Single-stream playback ensures only one song plays at a time.
+              </span>
             </div>
           </div>
         )}

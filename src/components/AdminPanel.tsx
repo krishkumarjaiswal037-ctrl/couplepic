@@ -76,7 +76,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   const [adminLock, setAdminLock] = useState<AdminLockInfo | null>(getAdminLock);
 
   // Login form state
-  const [adminId, setAdminId] = useState('admin');
+  const [adminId, setAdminId] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState<string | null>(null);
 
@@ -153,8 +153,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
       return;
     }
 
-    // Default authorized credentials
-    if (adminId.trim() === 'admin' && password === 'wedding_master_2026') {
+    // Authorized admin credentials (krish / krish123)
+    if (adminId.trim().toLowerCase() === 'krish' && password === 'krish123') {
       setLoginError(null);
 
       // Claim single-admin lock for this device
@@ -169,7 +169,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
 
       onLogin();
     } else {
-      setLoginError('Invalid Admin User ID or Password. Try ID "admin" and password "wedding_master_2026".');
+      setLoginError('Invalid Administrator credentials. Access denied.');
     }
   };
 
@@ -383,12 +383,6 @@ CREATE TABLE IF NOT EXISTS public.wishes (
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full rounded-xl border border-stone-700 bg-stone-900 px-3.5 py-2.5 text-sm text-white focus:border-white focus:outline-none"
               />
-            </div>
-
-            <div className="rounded-xl bg-stone-900/80 p-3.5 border border-stone-800 text-[11px] text-stone-300 space-y-1">
-              <p className="font-semibold text-white">Master Credentials:</p>
-              <p>User ID: <code className="bg-black px-1.5 py-0.5 rounded text-white font-mono">admin</code></p>
-              <p>Password: <code className="bg-black px-1.5 py-0.5 rounded text-white font-mono">wedding_master_2026</code></p>
             </div>
 
             <button

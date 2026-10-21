@@ -1,15 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Sparkles,
   Heart,
   ArrowDown,
   Music,
-  Camera,
-  Sun,
-  Sparkle,
-  Disc3,
-  Layers,
-  Flame,
 } from 'lucide-react';
 
 interface HomeHeroProps {
@@ -27,45 +21,8 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
   onOpenWishes,
   weddingsCount,
 }) => {
-  const [activeHoverCard, setActiveHoverCard] = useState<number | null>(null);
-
-  const ceremonyFeatures = [
-    {
-      icon: Sun,
-      title: 'Haldi Ceremony',
-      tag: 'Auspicious Turmeric',
-      desc: 'Batch multi-photo upload for bright yellow moments, playful rituals, and family blessings.',
-      accent: 'from-amber-500/20 to-yellow-500/5',
-      borderAccent: 'group-hover:border-amber-400/50',
-    },
-    {
-      icon: Sparkle,
-      title: 'Mehndi Celebration',
-      tag: 'Intricate Henna',
-      desc: 'Capture delicate henna patterns, festive laughter, evening songs, and sisterhood memories.',
-      accent: 'from-emerald-500/20 to-teal-500/5',
-      borderAccent: 'group-hover:border-emerald-400/50',
-    },
-    {
-      icon: Camera,
-      title: 'Stage & Reception',
-      tag: 'Grand Portraits',
-      desc: 'Upload high-resolution portraits with sovereign guest deletion rights and direct instant downloads.',
-      accent: 'from-purple-500/20 to-indigo-500/5',
-      borderAccent: 'group-hover:border-purple-400/50',
-    },
-    {
-      icon: Disc3,
-      title: '300+ Ceremony Melodies',
-      tag: 'YouTube Live Video',
-      desc: 'Over 300 curated tracks categorized by ceremony with working YouTube video player and direct access.',
-      accent: 'from-blue-500/20 to-cyan-500/5',
-      borderAccent: 'group-hover:border-blue-400/50',
-    },
-  ];
-
   return (
-    <div className="relative z-10 mx-auto max-w-7xl px-6 pt-16 pb-14 lg:px-12 text-center">
+    <div className="relative z-10 mx-auto max-w-7xl px-6 pt-16 pb-8 lg:px-12 text-center">
       {/* Kicker badge */}
       <div className="inline-flex items-center gap-2 rounded-full border border-stone-800 bg-stone-900/80 px-4 py-1.5 text-xs font-semibold tracking-wider text-stone-200 shadow-xl backdrop-blur-md">
         <Sparkles className="h-3.5 w-3.5 text-amber-400 animate-spin" style={{ animationDuration: '6s' }} />
@@ -115,49 +72,8 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
         </button>
       </div>
 
-      {/* Interactive 3D Animated Feature Cards */}
-      <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 text-left perspective-container">
-        {ceremonyFeatures.map((item, idx) => {
-          const Icon = item.icon;
-          const isHovered = activeHoverCard === idx;
-
-          return (
-            <div
-              key={idx}
-              onMouseEnter={() => setActiveHoverCard(idx)}
-              onMouseLeave={() => setActiveHoverCard(null)}
-              className={`group relative rounded-2xl border border-stone-800 bg-stone-950/80 p-6 shadow-xl transition-all duration-300 backdrop-blur-sm cursor-pointer overflow-hidden ${
-                item.borderAccent
-              } ${isHovered ? 'scale-[1.03] -translate-y-1.5 shadow-2xl' : ''}`}
-            >
-              {/* Dynamic top gradient ambient glow */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-b ${item.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`}
-              />
-
-              <div className="relative z-10 flex items-center justify-between mb-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-stone-900 border border-stone-800 text-white shadow-inner group-hover:scale-110 transition-transform">
-                  <Icon className="h-5 w-5" />
-                </div>
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-stone-900/90 text-stone-300 border border-stone-800">
-                  {item.tag}
-                </span>
-              </div>
-
-              <h3 className="relative z-10 font-serif text-xl font-bold text-white group-hover:text-blue-100 transition-colors">
-                {item.title}
-              </h3>
-
-              <p className="relative z-10 mt-2 text-xs leading-relaxed text-stone-400 font-sans">
-                {item.desc}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-
       {/* Explore Section Anchor */}
-      <div className="mt-14 flex justify-center">
+      <div className="mt-10 flex justify-center">
         <button
           onClick={onExplore}
           className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-400 hover:text-white transition-colors group"

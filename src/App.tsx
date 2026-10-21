@@ -17,6 +17,7 @@ import { CreateWeddingModal } from './components/CreateWeddingModal';
 import { MusicSuggesterModal } from './components/MusicSuggesterModal';
 import { WishesGeneratorModal } from './components/WishesGeneratorModal';
 import { SupabaseGitHubModal } from './components/SupabaseGitHubModal';
+import { CeremonyFeatureCards } from './components/CeremonyFeatureCards';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<'home' | 'wedding' | 'admin'>('home');
@@ -100,7 +101,7 @@ export default function App() {
               weddingsCount={weddings.length}
             />
 
-            {/* Carousel View (Strictly no front-page photo gallery) */}
+            {/* Active Celebrations Section (Placed above the four feature cards) */}
             <div id="carousel-section">
               <WeddingCarousel3D
                 weddings={weddings}
@@ -108,6 +109,13 @@ export default function App() {
                 onOpenCreate={() => setCreateModalOpen(true)}
               />
             </div>
+
+            {/* 4 Ceremony Cards: Haldi, Mehndi, Stage & Reception, 300+ Melodies */}
+            <CeremonyFeatureCards
+              onOpenMusic={() => setMusicModalOpen(true)}
+              onOpenCreate={() => setCreateModalOpen(true)}
+              onOpenWishes={() => setWishesModalOpen(true)}
+            />
           </div>
         )}
 

@@ -250,11 +250,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         </nav>
 
-        {/* Right Zone: Create Celebration Primary Action */}
+        {/* Right Zone: Create Celebration Primary Action (Hidden on mobile as requested) */}
         <div className="flex items-center gap-3 shrink-0">
           <button
             onClick={onOpenCreateModal}
-            className="inline-flex items-center gap-1.5 rounded-full bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-black hover:bg-stone-200 transition-all duration-300 shadow-xl hover:scale-105 active:scale-95"
+            className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-black hover:bg-stone-200 transition-all duration-300 shadow-xl hover:scale-105 active:scale-95"
           >
             <Sparkles className="h-3.5 w-3.5 text-black" />
             <span>Create Celebration</span>
@@ -283,17 +283,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <Home className="h-4 w-4" />
             <span>Home</span>
-          </button>
-
-          <button
-            onClick={() => {
-              onOpenCreateModal();
-              setMobileMenuOpen(false);
-            }}
-            className="flex w-full items-center gap-3 py-2 text-sm font-medium text-stone-200 hover:text-white"
-          >
-            <PlusCircle className="h-4 w-4" />
-            <span>Create Celebration</span>
           </button>
 
           <button
