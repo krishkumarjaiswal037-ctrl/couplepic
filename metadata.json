@@ -1,0 +1,6 @@
+{
+  "name": "CouplePic - Ceremony Photos & Wedding Celebration Platform",
+  "description": "CouplePic is an interactive ceremony photo sharing platform with multi-photo uploads for Haldi, Stage Photo, and Mehndi, 300+ YouTube ceremony songs, 3D ceremony rings background, Supabase database, and single-admin lock.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

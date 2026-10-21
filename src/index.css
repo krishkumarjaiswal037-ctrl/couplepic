@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'Outfit', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  h1, h2, h3, .font-serif, .font-display {
+    font-family: var(--font-serif);
+  }
+}
+
+/* ============================================================
+   THEMES: Black, Dark Blue (Blue Dark), White
+   ============================================================ */
+
+/* 1. Theme: Black (Midnight Obsidian Luxury) */
+.theme-black, .theme-monochrome {
+  background-color: #000000;
+  color: #f3f4f6;
+}
+
+.theme-black .nav-bar, .theme-monochrome .nav-bar {
+  background: rgba(8, 8, 10, 0.88);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.theme-black .card-panel, .theme-monochrome .card-panel {
+  background: #0d0d10;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+/* 2. Theme: Blue Dark (Celestial Deep Midnight Sapphire) */
+.theme-dark-blue, .theme-blue {
+  background-color: #020817;
+  color: #f1f5f9;
+}
+
+.theme-dark-blue .nav-bar, .theme-blue .nav-bar {
+  background: rgba(4, 13, 33, 0.88);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.28);
+  color: #f1f5f9;
+}
+
+.theme-dark-blue .card-panel, .theme-blue .card-panel {
+  background: #091530;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #f1f5f9;
+  box-shadow: 0 10px 30px -5px rgba(37, 99, 235, 0.18);
+}
+
+/* 3. Theme: White (Crisp Minimalist Modern Ivory) */
+.theme-white, .theme-white-blue {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.theme-white .nav-bar, .theme-white-blue .nav-bar {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid #e2e8f0;
+  color: #0f172a;
+}
+
+.theme-white .card-panel, .theme-white-blue .card-panel {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08);
+  color: #0f172a;
+}
+
+.theme-white .bg-stone-950,
+.theme-white .bg-stone-950\/80,
+.theme-white .bg-stone-950\/60 {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+}
+
+.theme-white .bg-stone-900,
+.theme-white .bg-stone-900\/90,
+.theme-white .bg-stone-900\/80,
+.theme-white .bg-stone-900\/60,
+.theme-white .bg-stone-900\/40 {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+}
+
+.theme-white .text-white {
+  color: #0f172a !important;
+}
+
+.theme-white .text-stone-200,
+.theme-white .text-stone-300 {
+  color: #334155 !important;
+}
+
+.theme-white .text-stone-400,
+.theme-white .text-stone-500 {
+  color: #64748b !important;
+}
+
+.theme-white .border-stone-800,
+.theme-white .border-stone-800\/80,
+.theme-white .border-stone-700 {
+  border-color: #e2e8f0 !important;
+}
+
+.theme-white footer {
+  background-color: #f8fafc !important;
+  border-top-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* ============================================================
+   ANIMATIONS & 3D CARD EFFECTS
+   ============================================================ */
+
+/* Shimmering Text Animation */
+@keyframes textShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: textShimmer 6s linear infinite;
+}
+
+/* Floating animation */
+@keyframes softFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-soft-float {
+  animation: softFloat 4s ease-in-out infinite;
+}
+
+/* Perspective container for 3D card tilt */
+.perspective-container {
+  perspective: 1200px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Smooth custom scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.6);
+}
