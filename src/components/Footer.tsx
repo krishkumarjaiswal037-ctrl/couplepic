@@ -110,7 +110,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateAdmin, onOpenCreate, o
               </div>
             </div>
             <p className="text-xs text-stone-400 leading-relaxed font-sans max-w-sm">
-              The modern interactive wedding celebration experience. Select up to 20 photos and videos at once, enjoy 300+ ceremony tracks, and preserve memories with sovereign guest deletion rights.
+              The modern interactive wedding celebration experience. Upload unlimited photos and videos with zero limits, enjoy 300+ ceremony tracks, and preserve memories with sovereign guest deletion rights.
             </p>
           </div>
 

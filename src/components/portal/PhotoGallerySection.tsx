@@ -69,8 +69,7 @@ const DEFAULT_SESSIONS: { name: string; description: string; badgeColor: string 
   },
 ];
 
-const MAX_UPLOAD_ITEMS = 20;
-
+// Unlimited photo & video batch uploads
 export const PhotoGallerySection: React.FC<PhotoGallerySectionProps> = ({
   weddingId,
   coupleNames,
@@ -118,35 +117,23 @@ export const PhotoGallerySection: React.FC<PhotoGallerySectionProps> = ({
     setUploadModalOpen(true);
   };
 
-  // Handle multi-file selection (supports Photos & Videos, up to 20 at a time)
+  // Handle multi-file selection (supports unlimited Photos & Videos)
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const newFiles = Array.from(e.target.files);
+    if (newFiles.length === 0) return;
 
-    const availableSlots = MAX_UPLOAD_ITEMS - previewFiles.length;
-    if (availableSlots <= 0) {
-      setFeedbackMsg({
-        text: `Maximum ${MAX_UPLOAD_ITEMS} photos and videos can be uploaded at a time.`,
-        isError: true,
-      });
-      return;
-    }
-
-    const filesToAdd = newFiles.slice(0, availableSlots);
-    if (newFiles.length > availableSlots) {
-      setFeedbackMsg({
-        text: `Selection capped at 20 items. Added first ${availableSlots} files.`,
-        isError: false,
-      });
-    }
-
-    const newPreviews = filesToAdd.map((file) => ({
+    const newPreviews = newFiles.map((file) => ({
       file,
       previewUrl: URL.createObjectURL(file),
       isVideo: file.type.startsWith('video/'),
     }));
 
     setPreviewFiles((prev) => [...prev, ...newPreviews]);
+    setFeedbackMsg({
+      text: `Added ${newFiles.length} file${newFiles.length > 1 ? 's' : ''} to upload queue. No limit!`,
+      isError: false,
+    });
   };
 
   const handleRemovePreview = (index: number) => {
@@ -159,7 +146,7 @@ export const PhotoGallerySection: React.FC<PhotoGallerySectionProps> = ({
     });
   };
 
-  // Multi-photo & video batch upload handler (up to 20 at once)
+  // Multi-photo & video batch upload handler (unlimited at once)
   const handleUploadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!uploaderName.trim()) {
@@ -169,7 +156,7 @@ export const PhotoGallerySection: React.FC<PhotoGallerySectionProps> = ({
 
     if (previewFiles.length === 0 && !singleUrl.trim()) {
       setFeedbackMsg({
-        text: 'Please select up to 20 photos or videos to upload.',
+        text: 'Please select photos or videos to upload.',
         isError: true,
       });
       return;
@@ -283,7 +270,7 @@ export const PhotoGallerySection: React.FC<PhotoGallerySectionProps> = ({
             Sacred Moments, Photos & Videos
           </h2>
           <p className="mt-1 text-sm text-stone-400 font-sans">
-            Guests can upload up to <strong className="text-white">20 photos and videos at a time</strong>. Everything uploaded is instantly visible across all mobile phones.
+            Guests can upload <strong className="text-white">unlimited photos and videos</strong> with zero limits. Everything uploaded is instantly visible across all mobile phones.
           </p>
         </div>
 
@@ -301,7 +288,7 @@ export const PhotoGallerySection: React.FC<PhotoGallerySectionProps> = ({
             className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-black hover:bg-stone-200 transition-all shadow-md active:scale-95"
           >
             <UploadCloud className="h-4 w-4" />
-            <span>Upload 20 Photos / Videos</span>
+            <span>Upload Photos / Videos (Unlimited)</span>
           </button>
         </div>
       </div>
@@ -352,7 +339,7 @@ export const PhotoGallerySection: React.FC<PhotoGallerySectionProps> = ({
                   className="inline-flex items-center gap-1 font-bold text-white bg-stone-800 hover:bg-white hover:text-black px-3 py-1 rounded-full transition-colors"
                 >
                   <Plus className="h-3 w-3" />
-                  <span>Upload (Up to 20)</span>
+                  <span>Upload (Unlimited)</span>
                 </button>
               </div>
             </div>
@@ -552,7 +539,7 @@ export const PhotoGallerySection: React.FC<PhotoGallerySectionProps> = ({
                     Upload Photos & Videos
                   </h3>
                   <p className="text-xs text-stone-400">
-                    Ceremony: <strong className="text-white">{targetSessionForUpload}</strong> · Up to 20 files at once
+                    Ceremony: <strong className="text-white">{targetSessionForUpload}</strong> · Unlimited Photos & Videos
                   </p>
                 </div>
               </div>
@@ -613,14 +600,14 @@ export const PhotoGallerySection: React.FC<PhotoGallerySectionProps> = ({
                 </p>
               </div>
 
-              {/* Multi-Photo & Video Picker: Up to 20 Items */}
+              {/* Multi-Photo & Video Picker: Unlimited */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <label className="block text-xs font-semibold uppercase tracking-wider text-stone-400">
-                    Choose Up to 20 Photos & Videos:
+                    Choose Photos & Videos (Unlimited):
                   </label>
                   <span className="text-[11px] font-mono text-amber-300">
-                    {previewFiles.length} / {MAX_UPLOAD_ITEMS} selected
+                    {previewFiles.length} selected · No Limit
                   </span>
                 </div>
 
@@ -644,10 +631,10 @@ export const PhotoGallerySection: React.FC<PhotoGallerySectionProps> = ({
                       </div>
                     </div>
                     <span className="text-xs font-bold text-white underline">
-                      Click to Browse & Select Photos and Videos (Up to 20)
+                      Click to Browse & Select Photos and Videos (Unlimited)
                     </span>
                     <span className="text-[11px] text-stone-400">
-                      Supports JPG, PNG, WEBP and MP4, WEBM, MOV videos
+                      Supports JPG, PNG, WEBP and MP4, WEBM, MOV videos · No upload limit
                     </span>
                   </label>
                 </div>

@@ -18,6 +18,7 @@ import { MusicSuggesterModal } from './components/MusicSuggesterModal';
 import { WishesGeneratorModal } from './components/WishesGeneratorModal';
 import { SupabaseGitHubModal } from './components/SupabaseGitHubModal';
 import { CeremonyFeatureCards } from './components/CeremonyFeatureCards';
+import { CeremonyGameDecider3D } from './components/CeremonyGameDecider3D';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<'home' | 'wedding' | 'admin'>('home');
@@ -109,6 +110,12 @@ export default function App() {
                 onOpenCreate={() => setCreateModalOpen(true)}
               />
             </div>
+
+            {/* Ceremony Games Decider 3D (Placed only below active celebration) */}
+            <CeremonyGameDecider3D
+              onOpenCreate={() => setCreateModalOpen(true)}
+              onOpenMusic={() => setMusicModalOpen(true)}
+            />
 
             {/* 4 Ceremony Cards: Haldi, Mehndi, Stage & Reception, 300+ Melodies */}
             <CeremonyFeatureCards

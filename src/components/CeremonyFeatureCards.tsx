@@ -49,7 +49,7 @@ export const CeremonyFeatureCards: React.FC<CeremonyFeatureCardsProps> = ({
       icon: Camera,
       title: 'Stage & Reception',
       tag: 'Grand Portraits',
-      desc: 'Upload up to 20 stage portraits with sovereign guest deletion rights and direct instant HD downloads.',
+      desc: 'Upload unlimited stage portraits and videos with sovereign guest deletion rights and direct instant HD downloads.',
       accent: 'from-purple-500/20 to-indigo-500/5',
       borderAccent: 'group-hover:border-purple-400/50',
       actionText: 'View Portraits',
